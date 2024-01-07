@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { increaseCounter, decreaseCounter } from './redux/action/counterAction';
-const App = () => {
-  const count = useSelector(state => state.counter.count);
-  const dispatch = useDispatch();
+import { useState } from "react";
 
+export default function MyApp() {
+  const [count, setCount] = useState(0);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <div>Count = {count}</div>
-        <button onClick={() => dispatch(increaseCounter())}>Increase</button>
-        <button onClick={() => dispatch(decreaseCounter())}>Decrease</button>
-      </header>
+    <div>
+      <h1>Counters that update separately</h1>
+      <MyButton count={count} setCount={setCount} />
+      <MyButton count={count} setCount={setCount} />
     </div>
   );
 }
 
-export default App;
+function MyButton(props) {
+  function handleClick() {
+    props.setCount(props.count + 1);
+  }
+
+  return <button onClick={handleClick}>Clicked {props.count} times</button>;
+}
